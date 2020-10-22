@@ -1,0 +1,126 @@
+﻿@model IEnumerable<WebApplication1.Models.Neo_Test>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table id="myTable" class="table table-hover table-bordered">
+    <thead style="background-color:aliceblue">
+        <tr>
+            <td>Email</td>
+            @*<td>CountryName</td>
+            <td>State</td>
+            <td>City</td>*@
+            <td>PanNumber</td>
+            <td>Passport</td>
+            <td>Image</td>
+            <td>Gender</td>
+            <td>IsActive</td>
+
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('#myTable').DataTable({
+
+                    "ajax": {
+                        "url": "/Neosoft/DisplayList",
+                        "type": "Post",
+                        "datatype":"json"
+                    },
+                    "columns": [
+                        { "data": "EmailAddress" },
+                        //{ "data": "CountryName" },
+                        //{ "data": "StateName" },
+                        //{ "data": "CityName" },
+                        { "data": "PanNumber" },
+                        { "data": "Passport" },
+                        { "data": "ProfileImage" },
+                        { "data": "Gender" },
+                        { "data": "IsActive" }
+
+                    ]
+                });
+            });
+    </script>
+
+}
+
+
+
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country.CountryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State.StateName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City.CityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PanNumebr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PassportNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfileImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.CountryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.State.StateName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City.CityName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PanNumebr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PassportNumber)
+        </td>
+        <td>
+            <img src="@Url.Content(item.ProfileImage)" alt="Not found" width="60" height="60" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

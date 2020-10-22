@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{9C45BC43-74F2-4F1A-82AD-D2A7D5F3A03D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoSoftTest", "WebApplication1\NeoSoftTest.csproj", "{9C45BC43-74F2-4F1A-82AD-D2A7D5F3A03D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
