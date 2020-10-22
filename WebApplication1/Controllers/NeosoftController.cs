@@ -39,7 +39,6 @@ namespace WebApplication1.Controllers
         {
             
            var result= helper.GetAllNeosoftData().ToList();
-            //return Json(new { data = result }, JsonRequestBehavior.AllowGet);
 
             return View(result);
         }
@@ -48,9 +47,8 @@ namespace WebApplication1.Controllers
         {
 
             var result = helper.GetAllNeosoftData().ToList();
-            //return Json(new { data = result }, JsonRequestBehavior.AllowGet);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
+             return Json(new { data = result }, JsonRequestBehavior.AllowGet);
+            
         }
 
 
@@ -84,6 +82,59 @@ namespace WebApplication1.Controllers
             return View();
             
         }
+
+        [HttpGet]
+        public ActionResult Edit(int? Id)
+        {
+
+            List<Country> countris = helper.GetAllCountry().ToList();
+            ViewBag.CountryList = new SelectList(CountryList(), "Row_Id", "CountryName");
+            List<State> Slist = helper.GetAllState().ToList();
+            ViewBag.StateList = new SelectList(Slist, "Row_Id", "StateName");
+
+            List<City> Clist = helper.GetAllCity().ToList();
+            ViewBag.CityList = new SelectList(Clist, "Row_Id", "CityName");
+
+
+
+            return View(helper.GetNeosoftById(Id));
+        }
+
+        // POST: Employee/Edit/5
+        [HttpPost]
+        public ActionResult Edit(Neo_Test neosoft)
+        {
+            if (ModelState.IsValid)
+            {
+                 helper.Update_Neo(neosoft);
+                ModelState.Clear();
+                return RedirectToAction("DisplayNeosoftList");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Error In Saving Data");
+                return View();
+            }
+        }
+        
+        [HttpGet]
+        public JsonResult IsPanNumberExist(string PanNumber)
+        {
+            return Json(!helper.GetAllNeosoftData().Any(x=> x.PanNumber == PanNumber), JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult IsPassportNumberExist(string PassportNumber)
+        {
+            return Json(!helper.GetAllNeosoftData().Any(x => x.PassportNumber == PassportNumber), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Delete(int Id)
+        {
+            helper.DeleteNeoData(Id);
+            ModelState.Clear();
+             return RedirectToAction("DisplayNeosoftList");
+           
+        }
+
 
 
     }

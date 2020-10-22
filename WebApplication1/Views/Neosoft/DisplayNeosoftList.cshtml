@@ -1,23 +1,27 @@
 ﻿@model IEnumerable<WebApplication1.Models.Neo_Test>
 
-<p>
+<button class="btn btn-default" style="margin-top:10px;margin-bottom:10px">
     @Html.ActionLink("Create New", "Create")
-</p>
+</button>
 
 <table id="myTable" class="table table-hover table-bordered">
     <thead style="background-color:aliceblue">
         <tr>
-            <td>Email</td>
-            @*<td>CountryName</td>
-            <td>State</td>
-            <td>City</td>*@
+            @*<input type="hidden" id="Row_Id" name="custId" value="3487" />*@
+              <td>Row_Id</td>
+            <td>EmailAdress</td>
+            <td>CountryName</td>
+            <td>StateName</td>
+            <td>CityName</td>
             <td>PanNumber</td>
             <td>Passport</td>
             <td>Image</td>
             <td>Gender</td>
             <td>IsActive</td>
+            <td>Edit</td>
+            <td>Delete</td>
 
-        </tr>
+        </td>
     </thead>
 </table>
 
@@ -29,98 +33,47 @@
 
                     "ajax": {
                         "url": "/Neosoft/DisplayList",
-                        "type": "Post",
+                        "type": "GET",
                         "datatype":"json"
                     },
                     "columns": [
-                        { "data": "EmailAddress" },
-                        //{ "data": "CountryName" },
-                        //{ "data": "StateName" },
-                        //{ "data": "CityName" },
+                        {"data":"Row_Id"},
+                        {
+                            "data": "EmailAddress"
+                        },
+                        { "data": "Country.CountryName" },
+                        { "data": "State.StateName" },
+                        { "data": "City.CityName" },
                         { "data": "PanNumber" },
-                        { "data": "Passport" },
-                        { "data": "ProfileImage" },
+                        { "data": "PassportNumber" },
+                        {
+                            "data": "ProfileImage",
+                            "render": function (data, type, JsonResultRow, meta) {
+                                return '<img height:"1px" width:"1px" src="' + JsonResultRow.ProfileImage + '"/>';
+                                console.log(data);
+                            }
+                        },
                         { "data": "Gender" },
-                        { "data": "IsActive" }
+                        { "data": "IsActive" },
+                        {
+                            "data": "Row_Id", "render": function (data,type,row)
+                            {
+                                return '<a class="btn btn-info" href="/Neosoft/Edit/' + row.Row_Id + '">Edit</a>';
+                                alert("Edit Call");
+                            }
+                        },
 
+                      {
+                          "data": "Row_Id", render: function (data, type, row) {
+                              return '<a  class="btn btn-danger" href="/Neosoft/Delete/' + row.Row_Id + '">Delete</a>';
+                          }
+                      }
+                        
                     ]
                 });
             });
+
     </script>
 
 }
 
-
-
-<table class="table">
-    <tr>
-       
-        <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Country.CountryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State.StateName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City.CityName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PanNumebr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PassportNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProfileImage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Country.CountryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State.StateName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City.CityName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PanNumebr)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PassportNumber)
-        </td>
-        <td>
-            <img src="@Url.Content(item.ProfileImage)" alt="Not found" width="60" height="60" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
-
-</table>

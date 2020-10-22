@@ -16,7 +16,7 @@ namespace WebApplication1
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Neosoft", action = "Create", id = UrlParameter.Optional }
+                defaults: new { controller = "Neosoft", action = "DisplayNeosoftList", id = UrlParameter.Optional }
             );
         }
     }

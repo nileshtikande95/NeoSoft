@@ -142,6 +142,7 @@
     <Content Include="Views\Shared\DisplayState.cshtml" />
     <Content Include="Views\Shared\DisplayCity.cshtml" />
     <Content Include="Views\Neosoft\DisplayNeosoftList.cshtml" />
+    <Content Include="Views\Neosoft\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />

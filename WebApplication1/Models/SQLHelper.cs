@@ -21,6 +21,7 @@ namespace WebApplication1.Models
             List<Country> countries = null;
 
             countries = new List<Country>();
+            
             SqlConnection con = new SqlConnection(_connectionString);
             SqlCommand cmd = new SqlCommand("stp_GetCountry", con);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -88,6 +89,29 @@ namespace WebApplication1.Models
         }
 
 
+        public void Update_Neo(Neo_Test neo)
+        {
+            SqlConnection con = new SqlConnection(_connectionString);
+            SqlCommand cmd = new SqlCommand("stp_UpadateNeoTest", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Row_Id", neo.Row_Id);
+            cmd.Parameters.AddWithValue("@EmailAddress", neo.EmailAddress);
+            cmd.Parameters.AddWithValue("@CountryId", neo.CountryId);
+            cmd.Parameters.AddWithValue("@StateId", neo.StateId);
+            cmd.Parameters.AddWithValue("@CityId", neo.CityId);
+            cmd.Parameters.AddWithValue("@PanNumber", neo.PanNumber);
+            cmd.Parameters.AddWithValue("@PassportNumber", neo.PassportNumber);
+            cmd.Parameters.AddWithValue("@ProfileImage", neo.ProfileImage);
+            cmd.Parameters.AddWithValue("@Gender", neo.Gender);
+            cmd.Parameters.AddWithValue("@IsActive", neo.IsActive);
+            
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+        }
+
+
         public void AddNeo_Test(Neo_Test neoTest)
         {
 
@@ -98,7 +122,7 @@ namespace WebApplication1.Models
             cmd.Parameters.AddWithValue("@CountryId", neoTest.CountryId);
             cmd.Parameters.AddWithValue("@StateId", neoTest.StateId);
             cmd.Parameters.AddWithValue("@CityId", neoTest.CityId);
-            cmd.Parameters.AddWithValue("@PanNumebr", neoTest.PanNumebr);
+            cmd.Parameters.AddWithValue("@PanNumber", neoTest.PanNumber);
             cmd.Parameters.AddWithValue("@PassportNumber", neoTest.PassportNumber);
             cmd.Parameters.AddWithValue("@ProfileImage", neoTest.ProfileImage);
             cmd.Parameters.AddWithValue("@Gender", neoTest.Gender);
@@ -124,6 +148,7 @@ namespace WebApplication1.Models
             while (reader.Read())
             {
                 Neo_Test neo = new Neo_Test();
+                neo.Row_Id = Convert.ToInt32(reader["Row_Id"]);
                 neo.EmailAddress = reader["EmailAddress"].ToString();
                 neo.CountryId = Convert.ToInt32(reader["CountryId"]);
                 neo.Country = new Country() {
@@ -143,7 +168,7 @@ namespace WebApplication1.Models
                     Row_Id = Convert.ToInt32(reader["CityId"]),
                     CityName = reader["CityName"].ToString()
                 };
-                neo.PanNumebr= reader["PanNumebr"].ToString();
+                neo.PanNumber= reader["PanNumber"].ToString();
                 neo.PassportNumber= reader["PassportNumber"].ToString();
                 neo.ProfileImage= reader["ProfileImage"].ToString();
                 neo.Gender = reader["Gender"].ToString();
@@ -152,5 +177,48 @@ namespace WebApplication1.Models
             }
             return neosoft;
         }
+
+        public Neo_Test GetNeosoftById(int? id)
+        {
+            Neo_Test neo = new Neo_Test();
+            SqlConnection con = new SqlConnection(_connectionString);
+            SqlCommand cmd = new SqlCommand("stp_GetById", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Id ", id);
+            
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                neo.Row_Id = Convert.ToInt32(reader["Row_Id"]);
+                neo.EmailAddress = reader["EmailAddress"].ToString();
+                neo.CountryId = Convert.ToInt32(reader["CountryId"]);
+                neo.StateId = Convert.ToInt32(reader["StateId"]);
+                
+                neo.CityId = Convert.ToInt32(reader["CityId"]);
+                
+                neo.PanNumber = reader["PanNumber"].ToString();
+                neo.PassportNumber = reader["PassportNumber"].ToString();
+                neo.ProfileImage = reader["ProfileImage"].ToString();
+                neo.Gender = reader["Gender"].ToString();
+                neo.IsActive = Convert.ToBoolean(reader["IsActive"]);
+                
+            }
+            return neo;
+        }
+
+        public void DeleteNeoData(int? id)
+        {
+            SqlConnection con = new SqlConnection(_connectionString);
+            SqlCommand cmd = new SqlCommand("stp_DeleteData", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            con.Open();
+            cmd.ExecuteNonQuery().ToString();
+       
+            con.Close();
+        }
+
     }
 }
