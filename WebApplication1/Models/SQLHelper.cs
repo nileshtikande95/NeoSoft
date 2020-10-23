@@ -21,11 +21,11 @@ namespace WebApplication1.Models
             List<Country> countries = null;
 
             countries = new List<Country>();
-            
+
             SqlConnection con = new SqlConnection(_connectionString);
             SqlCommand cmd = new SqlCommand("stp_GetCountry", con);
             cmd.CommandType = CommandType.StoredProcedure;
-           
+
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -46,7 +46,7 @@ namespace WebApplication1.Models
             SqlConnection con = new SqlConnection(_connectionString);
             SqlCommand cmd = new SqlCommand("stp_GetState", con);
             cmd.CommandType = CommandType.StoredProcedure;
-           
+
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -72,7 +72,7 @@ namespace WebApplication1.Models
             SqlConnection con = new SqlConnection(_connectionString);
             SqlCommand cmd = new SqlCommand("stp_GetCity", con);
             cmd.CommandType = CommandType.StoredProcedure;
-           
+
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -104,7 +104,7 @@ namespace WebApplication1.Models
             cmd.Parameters.AddWithValue("@ProfileImage", neo.ProfileImage);
             cmd.Parameters.AddWithValue("@Gender", neo.Gender);
             cmd.Parameters.AddWithValue("@IsActive", neo.IsActive);
-            
+
             con.Open();
             cmd.ExecuteNonQuery();
             con.Close();
@@ -151,7 +151,8 @@ namespace WebApplication1.Models
                 neo.Row_Id = Convert.ToInt32(reader["Row_Id"]);
                 neo.EmailAddress = reader["EmailAddress"].ToString();
                 neo.CountryId = Convert.ToInt32(reader["CountryId"]);
-                neo.Country = new Country() {
+                neo.Country = new Country()
+                {
                     Row_Id = Convert.ToInt32(reader["CountryId"]),
                     CountryName = reader["CountryName"].ToString()
                 };
@@ -168,9 +169,9 @@ namespace WebApplication1.Models
                     Row_Id = Convert.ToInt32(reader["CityId"]),
                     CityName = reader["CityName"].ToString()
                 };
-                neo.PanNumber= reader["PanNumber"].ToString();
-                neo.PassportNumber= reader["PassportNumber"].ToString();
-                neo.ProfileImage= reader["ProfileImage"].ToString();
+                neo.PanNumber = reader["PanNumber"].ToString();
+                neo.PassportNumber = reader["PassportNumber"].ToString();
+                neo.ProfileImage = reader["ProfileImage"].ToString();
                 neo.Gender = reader["Gender"].ToString();
                 neo.IsActive = Convert.ToBoolean(reader["IsActive"]);
                 neosoft.Add(neo);
@@ -185,7 +186,7 @@ namespace WebApplication1.Models
             SqlCommand cmd = new SqlCommand("stp_GetById", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Id ", id);
-            
+
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -194,15 +195,15 @@ namespace WebApplication1.Models
                 neo.EmailAddress = reader["EmailAddress"].ToString();
                 neo.CountryId = Convert.ToInt32(reader["CountryId"]);
                 neo.StateId = Convert.ToInt32(reader["StateId"]);
-                
+
                 neo.CityId = Convert.ToInt32(reader["CityId"]);
-                
+
                 neo.PanNumber = reader["PanNumber"].ToString();
                 neo.PassportNumber = reader["PassportNumber"].ToString();
                 neo.ProfileImage = reader["ProfileImage"].ToString();
                 neo.Gender = reader["Gender"].ToString();
                 neo.IsActive = Convert.ToBoolean(reader["IsActive"]);
-                
+
             }
             return neo;
         }
@@ -216,7 +217,7 @@ namespace WebApplication1.Models
 
             con.Open();
             cmd.ExecuteNonQuery().ToString();
-       
+
             con.Close();
         }
 

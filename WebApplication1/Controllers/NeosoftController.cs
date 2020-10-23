@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
             ViewBag.StateList = new SelectList(Slist, "Row_Id", "StateName");
             return PartialView("DisplayState");
         }
-
+        
         public ActionResult CityList(int StateId)
         {
             List<City> Clist = helper.GetAllCity().Where(x => x.StateId == StateId).ToList();
@@ -63,10 +63,11 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult Create(HttpPostedFileBase file, Neo_Test neoTest)
         {
+
             string filename = Path.GetFileName(file.FileName);
             string extension = Path.GetExtension(file.FileName);
-            string path = Path.Combine(Server.MapPath("~/Image"), filename);
-            neoTest.ProfileImage = "~/Image/" + filename;
+            string path = Path.Combine(Server.MapPath("../Image"), filename);
+            neoTest.ProfileImage = "../Image/" + filename;
             if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
             {
 
@@ -77,6 +78,10 @@ namespace WebApplication1.Controllers
                     helper.AddNeo_Test(neoTest);
                     return RedirectToAction("DisplayNeosoftList");
                 }
+            }
+            else
+            {
+                Response.Write("<script>alert('Not Valied..');</script>");
             }
 
             return View();

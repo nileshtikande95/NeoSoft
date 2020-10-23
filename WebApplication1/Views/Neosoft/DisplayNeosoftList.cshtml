@@ -47,10 +47,11 @@
                         { "data": "PanNumber" },
                         { "data": "PassportNumber" },
                         {
-                            "data": "ProfileImage",
+                            //    "data": "ProfileImage",
+                            
                             "render": function (data, type, JsonResultRow, meta) {
-                                return '<img height:"1px" width:"1px" src="' + JsonResultRow.ProfileImage + '"/>';
-                                console.log(data);
+                                
+                                return '<img height="50" width="50" src="' + JsonResultRow.ProfileImage + '">';
                             }
                         },
                         { "data": "Gender" },
